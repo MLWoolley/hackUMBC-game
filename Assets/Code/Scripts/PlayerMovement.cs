@@ -9,6 +9,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField][Range(1f, 5f)] private float jumpFallGravityMultiplier;
 
     [Header("Ground Check Properties")]
+    [SerializeField] private Transform groundCheckPoint;
+    [SerializeField] private float groundCheckRadius = 0.05f;
     [SerializeField] private float groundCheckHeight;
     [SerializeField] private LayerMask groundMask;
     [SerializeField] private float disableGCTime;
@@ -87,7 +89,7 @@ public class PlayerMovement : MonoBehaviour
     {
         Debug.Log("Jump input received");
 
-        if (groundCheckEnabled && IsGrounded())
+        if (!jumping && groundCheckEnabled && IsGrounded())
         {
             Debug.Log("Player is grounded. Jumping now.");
 
@@ -106,14 +108,7 @@ public class PlayerMovement : MonoBehaviour
 
     private bool IsGrounded()
     {
-
-        //Center coordinate of box that checks if player is touching the ground
-        boxCenter = new Vector2(collider.bounds.center.x, collider.bounds.center.y) + (Vector2.down * (collider.bounds.extents.y + (groundCheckHeight / 2f)));
-
-        //Size of the box (width, height)
-        boxSize = new Vector2(collider.bounds.size.x, groundCheckHeight);
-
-        var groundBox = Physics2D.OverlapBox(boxCenter, boxSize, 0f, groundMask);
+        var groundBox = Physics2D.OverlapCircle(groundCheckPoint.position, groundCheckRadius, groundMask);
 
         if (groundBox != null)
         {
