@@ -10,12 +10,12 @@ public class Scene01Events : MonoBehaviour
     public GameObject textBox;
     public GameObject basil; // Basil starts inactive
     public TextMeshProUGUI dialogueText;
-    public TextMeshProUGUI nameText; // Character name display
+    public TextMeshProUGUI nameText;
 
-    [Header("Typing Audio")]
-    public AudioSource audioSource;       // The AudioSource component
-    public AudioClip highVoiceClip;       // For high-pitched characters
-    public AudioClip lowVoiceClip;        // For low-pitched characters
+    [Header("Audio Settings")]
+    public AudioSource audioSource;
+    public AudioClip highVoiceClip;
+    public AudioClip lowVoiceClip;
 
     [Header("Dialogue Settings")]
     public float typingSpeed = 0.05f;
@@ -30,7 +30,7 @@ public class Scene01Events : MonoBehaviour
         public string text;
     }
 
-    // Example sequence
+    // Cutscene 1 lines
     public DialogueLine[] dialogueLines = new DialogueLine[]
     {
         new DialogueLine { speaker = "Narrator", text = "The hum of the lights fills the air." },
@@ -42,18 +42,49 @@ public class Scene01Events : MonoBehaviour
         new DialogueLine { speaker = "Narrator", text = "Basil nods and looks away." }
     };
 
+    // Cutscene 2 lines (example placeholder)
+    public DialogueLine[] cutscene2Lines = new DialogueLine[]
+    {
+        new DialogueLine { speaker = "Basil", text = "Finally, some time to relax." },
+        new DialogueLine { speaker = "Cashier", text = "See you tomorrow!" }
+    };
+
     void Start()
     {
         StartCoroutine(PlaySequence());
     }
 
+    void Update()
+    {
+        // Press G to start cutscene 2 directly (simulate gameplay done)
+        if (Input.GetKeyDown(KeyCode.G))
+        {
+            StartSecondCutscene();
+        }
+    }
+
+    void StartSecondCutscene()
+    {
+        dialogueLines = cutscene2Lines; // Assign second cutscene
+        StartCoroutine(PlaySequence());
+    }
+
     IEnumerator PlaySequence()
     {
-        // Initial setup delay
-        yield return new WaitForSeconds(2f);
+        // Reset fade screens
+        fadeScreen.SetActive(true);   // Show fade in at start
+        fadeOut.SetActive(false);     // Hide fade out at start
 
+        // Clear previous dialogue
+        dialogueText.text = "";
+        nameText.text = "";
+        textBox.SetActive(false);     // Hide text box until typing begins
+
+        yield return new WaitForSeconds(2f); // Optional initial delay
+
+        // Show text box and start dialogue
         textBox.SetActive(true);
-        fadeScreen.SetActive(false);
+        fadeScreen.SetActive(false);  // Fade in finished
 
         yield return new WaitForSeconds(2f);
 
@@ -63,12 +94,11 @@ public class Scene01Events : MonoBehaviour
         {
             DialogueLine line = dialogueLines[i];
 
-            // Handle Basil appearing before her first line
+            // Trigger Basil entrance if needed
             if (line.speaker == "Basil" && !basil.activeSelf)
             {
-                // Trigger Basil's entrance (your animation should run on enable)
                 basil.SetActive(true);
-                yield return new WaitForSeconds(2f); // Wait for her animation
+                yield return new WaitForSeconds(2f); // Wait for animation
             }
 
             // Update speaker name only if it changed
@@ -77,9 +107,7 @@ public class Scene01Events : MonoBehaviour
                 currentSpeaker = line.speaker;
 
                 if (currentSpeaker == "Narrator" || string.IsNullOrWhiteSpace(currentSpeaker))
-                {
                     nameText.gameObject.SetActive(false);
-                }
                 else
                 {
                     nameText.gameObject.SetActive(true);
@@ -87,24 +115,31 @@ public class Scene01Events : MonoBehaviour
                 }
             }
 
-            // Type out the line
-            yield return StartCoroutine(TypeText(line.text));
+            // Type the line with voice
+            yield return StartCoroutine(TypeText(line.text, currentSpeaker));
 
-            // Short delay before next line
+            // Delay before next line
             yield return new WaitForSeconds(lineDelay);
         }
 
-        yield return new WaitForSeconds(1f); // brief pause
+        // At the end, show fade out
+        yield return new WaitForSeconds(1f);
         fadeOut.SetActive(true);
+
+        // Hide text box so it doesnÅft show previous line
+        textBox.SetActive(false);
+        dialogueText.text = "";
+        nameText.text = "";
     }
 
-    IEnumerator TypeText(string textToType)
+
+
+    IEnumerator TypeText(string textToType, string speaker)
     {
         dialogueText.text = "";
 
         foreach (char letter in textToType)
         {
-            // Skip typing if user presses skipKey
             if (Input.GetKeyDown(skipKey))
             {
                 dialogueText.text = textToType;
@@ -112,8 +147,15 @@ public class Scene01Events : MonoBehaviour
             }
 
             dialogueText.text += letter;
+
+            if (audioSource != null)
+            {
+                AudioClip clipToPlay = (speaker == "Basil" || speaker == "Cashier") ? highVoiceClip : lowVoiceClip;
+                audioSource.pitch = UnityEngine.Random.Range(0.9f, 1.1f);
+                audioSource.PlayOneShot(clipToPlay);
+            }
+
             yield return new WaitForSeconds(typingSpeed);
         }
-
     }
 }
