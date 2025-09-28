@@ -48,11 +48,27 @@ public class Scene01Events : MonoBehaviour
         new DialogueLine { speaker = "Basil", text = "Finally, some time to relax." },
         new DialogueLine { speaker = "Cashier", text = "See you tomorrow!" }
     };
+    public DialogueLine[] cutscene3Lines = new DialogueLine[]
+    {
+        new DialogueLine { speaker = "Basil", text = "Finally, some time to relax." },
+        new DialogueLine { speaker = "Cashier", text = "See you tomorrow!" }
+    };
+    public DialogueLine[] cutscene4Lines = new DialogueLine[]
+    {
+        new DialogueLine { speaker = "Basil", text = "Finally, some time to relax." },
+        new DialogueLine { speaker = "Cashier", text = "See you tomorrow!" }
+    };
 
     void Start()
     {
+        //StartCoroutine(PlaySequence());
+    }
+
+    public void PlayCutscene()
+    {
         StartCoroutine(PlaySequence());
     }
+
 
     void Update()
     {
@@ -61,6 +77,15 @@ public class Scene01Events : MonoBehaviour
         {
             StartSecondCutscene();
         }
+        if (Input.GetKeyDown(KeyCode.H))
+        {
+            StartThirdCutscene();
+        }
+        if (Input.GetKeyDown(KeyCode.J))
+        {
+            StartFourthCutscene();
+        }
+
     }
 
     void StartSecondCutscene()
@@ -68,6 +93,17 @@ public class Scene01Events : MonoBehaviour
         dialogueLines = cutscene2Lines; // Assign second cutscene
         StartCoroutine(PlaySequence());
     }
+    void StartThirdCutscene()
+    {
+        dialogueLines = cutscene3Lines; // Assign second cutscene
+        StartCoroutine(PlaySequence());
+    }
+    void StartFourthCutscene()
+    {
+        dialogueLines = cutscene4Lines; // Assign second cutscene
+        StartCoroutine(PlaySequence());
+    }
+
 
     IEnumerator PlaySequence()
     {
@@ -150,7 +186,7 @@ public class Scene01Events : MonoBehaviour
 
             if (audioSource != null)
             {
-                AudioClip clipToPlay = (speaker == "Basil" || speaker == "Cashier") ? highVoiceClip : lowVoiceClip;
+                AudioClip clipToPlay = (speaker == "Basil" || speaker == "Cashier" || speaker == "Granny") ? highVoiceClip : lowVoiceClip;
                 audioSource.pitch = UnityEngine.Random.Range(0.9f, 1.1f);
                 audioSource.PlayOneShot(clipToPlay);
             }
