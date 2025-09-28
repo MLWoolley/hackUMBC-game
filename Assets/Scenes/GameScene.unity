@@ -1244,6 +1244,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b50913f09c1cfd542916c00308bfead3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CutsceneTrigger
+  scene01Events: {fileID: 0}
 --- !u!1 &1086446883
 GameObject:
   m_ObjectHideFlags: 0
@@ -4013,7 +4014,7 @@ GameObject:
   - component: {fileID: 1586476797}
   m_Layer: 0
   m_Name: CirclePlayer
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

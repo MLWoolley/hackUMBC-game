@@ -2,7 +2,7 @@ using System.Collections;
 using UnityEngine;
 using TMPro;
 
-public class Scene01Events : MonoBehaviour
+public class SceneEvents : MonoBehaviour
 {
     [Header("Scene Objects")]
     public GameObject fadeScreen;
@@ -61,13 +61,13 @@ public class Scene01Events : MonoBehaviour
 
     void Start()
     {
-        //StartCoroutine(PlaySequence());
-    }
-
-    public void PlayCutscene()
-    {
         StartCoroutine(PlaySequence());
     }
+
+    /*public void PlayCutscene()
+    {
+        StartCoroutine(PlaySequence());
+    }*/
 
 
     void Update()
@@ -166,6 +166,10 @@ public class Scene01Events : MonoBehaviour
         textBox.SetActive(false);
         dialogueText.text = "";
         nameText.text = "";
+
+        // Load new scene after cutscene finishes
+        yield return new WaitForSeconds(1f); // (optional wait before switching)
+        UnityEngine.SceneManagement.SceneManager.LoadScene("GameScene");
     }
 
 
