@@ -197,6 +197,32 @@ MonoBehaviour:
   - speaker: Narrator
     text: "And after a few seconds\u2026 the screen turns on."
   cutscene2Lines:
+  - speaker: Narrator
+    text: The coin is spit back out of the coin slot, clinking onto the floor.
+  - speaker: Narrator
+    text: You pick it up with a huff.
+  - speaker: Basil
+    text: What? That was literally impossible! What a rip off!
+  - speaker: Granny
+    text: Oh my... let me help you, dearie.
+  - speaker: Basil
+    text: ?!
+  - speaker: Granny
+    text: Ho ho ho! I don't bite, dear. I'm simply a ghost, haunting this machine.
+  - speaker: Granny
+    text: You can call me Granny.
+  - speaker: Basil
+    text: ...Not the weirdest thing to ever happen to me.
+  - speaker: Basil
+    text: How can you help me get over that pit?
+  - speaker: Basil
+    text: Just watch me, my dear.
+  cutscene3Lines:
+  - speaker: Basil
+    text: Finally, some time to relax.
+  - speaker: Cashier
+    text: See you tomorrow!
+  cutscene4Lines:
   - speaker: Basil
     text: Finally, some time to relax.
   - speaker: Cashier
