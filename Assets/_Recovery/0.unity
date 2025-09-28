@@ -131,7 +131,7 @@ GameObject:
   - component: {fileID: 379757298}
   - component: {fileID: 379757297}
   - component: {fileID: 379757299}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Main
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2447,7 +2447,7 @@ GameObject:
   - component: {fileID: 1586476799}
   - component: {fileID: 1586476798}
   - component: {fileID: 1586476797}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: CirclePlayer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2612,14 +2612,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4cd050942b0184741b7e216caa33d8c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement
-  speed: 6
-  jumpPower: 5
-  jumpFallGravityMultiplier: 2
-  groundCheckHeight: 0.2
+  speed: 0
+  jumpPower: 0
+  jumpFallGravityMultiplier: 0
+  groundCheckHeight: 0
   groundMask:
     serializedVersion: 2
-    m_Bits: 64
-  disableGCTime: 0.025
+    m_Bits: 0
+  disableGCTime: 0
 --- !u!1 &1666734494
 GameObject:
   m_ObjectHideFlags: 0
